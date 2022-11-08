@@ -1,0 +1,5 @@
+total:841532
+uppers:27946
+lowers:1057289
+numbers:852
+specials:46818
