@@ -4,7 +4,8 @@ import csv
 
 def main():
     # load dictionary
-    with open("typeracer_text_dict.json", "r") as read_json:
+    filename_read = "typeracer_text_dict.json"
+    with open(filename_read, "r") as read_json:
         full_text_dict = json.load(read_json)
 
     # extract words
@@ -17,7 +18,7 @@ def main():
 
 
 def extract_words(full_text_dict):
-    # use regex to split text into words. Add words to dict
+    # regex to split text into words. Add words to dict
     word_dict = {}
 
     for key in full_text_dict.keys():
@@ -30,6 +31,14 @@ def extract_words(full_text_dict):
             # normalize to lower case
             word = word.lower()
 
+            # light word cleaning
+            if word == "'":
+                continue
+            if word[0] == "'":
+                word = word[1:]
+            if word[-1] == "'":
+                word = word[:-1]
+
             # add to dictionary
             if word in word_dict.keys():
                 word_dict[word] = word_dict[word] + (1*repetitions)
@@ -41,7 +50,9 @@ def extract_words(full_text_dict):
 
 def write_to_csv(word_dict):
 
-    csv_file = open("extracted_words.csv", "w", newline='')
+    # connect to file
+    filename_csv = "words.csv"
+    csv_file = open(filename_csv, "w", newline='')
     writer = csv.writer(csv_file)
 
     for key in word_dict.keys():

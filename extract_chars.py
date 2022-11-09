@@ -4,7 +4,8 @@ import csv
 def main():
 
     # load dictionary
-    with open("typeracer_text_dict.json", "r") as read_json:
+    filename_read = "typeracer_text_dict.json"
+    with open(filename_read, "r") as read_json:
         full_text_dict = json.load(read_json)
 
     # extract characters
@@ -20,17 +21,13 @@ def extract_chars(full_text_dict):
     # Iterates through all texts & extracts typed characters
     char_dict = {}
     
-    # initialize extra counters
+    # initialize case counters
     uppers = 0
     lowers = 0
-    numbers = 0
-    specials = 0
-    total_chars = 0
 
     for key in full_text_dict:
         repetitions = full_text_dict[key][0]
         text = full_text_dict[key][1]
-        total_chars = total_chars + len(text)
 
         for char in text:
             # ignore newline (\n) and carriage return (\r)
@@ -38,15 +35,11 @@ def extract_chars(full_text_dict):
             if (char == "\n") or (char == "\r"):
                 continue
 
-            # update extra counters
+            # update case counters
             if ("A" <= char <= "Z"):
                 uppers = uppers + (1*repetitions)
             elif ("a" <= char <= "z"):
                 lowers = lowers + (1*repetitions)
-            elif ("0" <= char <= "9"):
-                numbers = numbers + (1*repetitions)
-            elif (char != " "):
-                specials = specials + (1*repetitions)
 
             # add to dict as lowercase
             char = char.lower()
@@ -55,14 +48,15 @@ def extract_chars(full_text_dict):
             else:
                 char_dict[char] = (1*repetitions)
 
-    # save the extra counters
-    count_str = "total:{}\nuppers:{}\nlowers:{}\nnumbers:{}\nspecials:{}"\
-        .format(total_chars,uppers,lowers,numbers,specials)
-    with open("simple_char_count.txt", "w") as write_txt:
+    # save case counters
+    count_str = "uppers:{}\nlowers:{}\n".format(uppers,lowers)
+    filename_txt = "case_count.txt"
+    with open(filename_txt, "w") as write_txt:
         write_txt.write(count_str)
 
     # save char_dict
-    with open("char_dict.json", "w") as write_json:
+    filename_json = "char_dict.json"
+    with open(filename_json, "w") as write_json:
         json.dump(char_dict, write_json)
     
     return char_dict
@@ -70,7 +64,9 @@ def extract_chars(full_text_dict):
 
 def write_to_csv(char_dict):
 
-    csv_file = open("extracted_chars.csv", "w", newline='')
+    # connect to file
+    filename_csv = "chars.csv"
+    csv_file = open(filename_csv, "w", newline='')
     writer = csv.writer(csv_file)
 
     for key in char_dict.keys():
