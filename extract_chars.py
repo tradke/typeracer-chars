@@ -4,7 +4,7 @@ import csv
 def main():
 
     # load dictionary
-    filename_read = "typeracer_text_dict.json"
+    filename_read = "./data/typeracer_text_dict.json"
     with open(filename_read, "r") as read_json:
         full_text_dict = json.load(read_json)
 
@@ -50,12 +50,12 @@ def extract_chars(full_text_dict):
 
     # save case counters
     count_str = "uppers:{}\nlowers:{}\n".format(uppers,lowers)
-    filename_txt = "case_count.txt"
+    filename_txt = "./data/case_count.txt"
     with open(filename_txt, "w") as write_txt:
         write_txt.write(count_str)
 
     # save char_dict
-    filename_json = "char_dict.json"
+    filename_json = "./data/char_dict.json"
     with open(filename_json, "w") as write_json:
         json.dump(char_dict, write_json)
     
@@ -65,7 +65,7 @@ def extract_chars(full_text_dict):
 def write_to_csv(char_dict):
 
     # connect to file
-    filename_csv = "chars.csv"
+    filename_csv = "./data/chars.csv"
     csv_file = open(filename_csv, "w", newline='')
     writer = csv.writer(csv_file)
 

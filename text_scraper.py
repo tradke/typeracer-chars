@@ -22,8 +22,8 @@ import time
 
 def main():
     # define filenames
-    filename_json = "typeracer_text_dict.json"
-    filename_csv = "races.csv"
+    filename_json = "./data/typeracer_text_dict.json"
+    filename_csv = "./data/races.csv"
 
     # Try to load an existing dictionary
     try:
@@ -39,7 +39,7 @@ def main():
     get_texts(new_dict, old_dict)
 
     # save dict as .json
-    with open("typeracer_text_dict.json", "w") as write_json:
+    with open(filename_json, "w") as write_json:
         json.dump(new_dict, write_json)
 
     return

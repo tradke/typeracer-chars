@@ -4,7 +4,7 @@ import csv
 
 def main():
     # load dictionary
-    filename_read = "typeracer_text_dict.json"
+    filename_read = "./data/typeracer_text_dict.json"
     with open(filename_read, "r") as read_json:
         full_text_dict = json.load(read_json)
 
@@ -25,6 +25,7 @@ def extract_words(full_text_dict):
         repetitions = full_text_dict[key][0]
         text = full_text_dict[key][1]
 
+        # regex to split words *cleaning required*
         split_text = re.findall(r"[\w']+", text)
 
         for word in split_text:
@@ -38,6 +39,8 @@ def extract_words(full_text_dict):
                 word = word[1:]
             if word[-1] == "'":
                 word = word[:-1]
+            if (len(word)==1) and (word != "a") and (word !="i"):
+                continue    # ignore 1-length words \ {a, i}
 
             # add to dictionary
             if word in word_dict.keys():
@@ -51,7 +54,7 @@ def extract_words(full_text_dict):
 def write_to_csv(word_dict):
 
     # connect to file
-    filename_csv = "words.csv"
+    filename_csv = "./data/words.csv"
     csv_file = open(filename_csv, "w", newline='')
     writer = csv.writer(csv_file)
 
