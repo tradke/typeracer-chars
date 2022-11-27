@@ -4,14 +4,20 @@ def main():
     # Finds words that can be typed with one hand (one side of keyboard)
     word_list = get_words()
 
-    chars_left = "qwertasdfgzxcvb"
-    chars_right = "yuiophjkl'nm"
+    chars_left = "qwertasdfgzxcv"
+    chars_right = "yuiophjkl'nmb"
+    numbers = "0123456789"
 
     set_left = set()
     set_right = set()
 
     for word in word_list:
         for char in word:
+            if char in numbers:
+                # ignore words with numbers
+                set_left.discard(word)
+                set_right.discard(word)
+                break
             if (word in set_left) and (word in set_right):
                 break   # goto next word
             if char in chars_left:
